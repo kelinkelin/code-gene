@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Gene"
+  short_description: "Strict code generation discipline"
+  default_prompt: "Use $code-gene to make this code change with verification-first discipline."
