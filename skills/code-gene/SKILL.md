@@ -15,6 +15,10 @@ description: >
 
 When active, every code change passes the Eight Honors and the checklist before output.
 Always read the relevant current code before advising or editing.
+Non-negotiable: before proposing or changing code, first locate and inspect the
+project's real implementation, signatures, call sites, data models, and tests
+that govern the change. Never design from model intuition, generic framework
+memory, or guessed business flow when repository evidence can be checked.
 
 ## Activation
 
@@ -214,7 +218,7 @@ For 7Fresh / DongBoot Java projects, `~/.claude/rules/` also enforces layering, 
 
 Before any edit, output a brief `<thinking>` covering the applicable items:
 
-- [ ] Interfaces I will call: read/grepped.
+- [ ] Relevant project code located and read first: real implementation, signatures, call sites, data models, and tests.
 - [ ] Ambiguity resolved or asked; business rules sourced from user/code, not invented.
 - [ ] Existing util/service/DTO searched before creating new.
 - [ ] Verification plan; layering/naming/style match the project.
