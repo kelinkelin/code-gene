@@ -1,13 +1,13 @@
-# Code Gene Skill
+# code-gene
 
 Reusable Codex skill for verification-first code generation discipline.
 
 ## Install From GitHub
 
-After this repository is uploaded to GitHub, ask Codex:
+Ask Codex:
 
 ```text
-Install the code-gene skill from https://github.com/<your-user>/code-gene-skill/tree/main/skills/code-gene
+Install the code-gene skill from https://github.com/kelinkelin/code-gene/tree/main/skills/code-gene
 ```
 
 Restart Codex after installation so the skill is discovered.
@@ -39,7 +39,12 @@ use code-gene
 skills/
 └── code-gene/
     ├── SKILL.md
+    ├── references/
+    │   ├── code-style.md
+    │   ├── delivery-tooling.md
+    │   ├── java-backend.md
+    │   ├── logging.md
+    │   └── review.md
     └── agents/
         └── openai.yaml
 ```
-
