@@ -9,6 +9,7 @@ Goal: when something breaks, anyone locates the failing method and step within 1
 5. **Exit log carries outcome + elapsed**: result (success/failure/fallback), costMs, and on failure the error type/reason.
 6. **Business private methods need enough logs when they branch or call outward.** If a private method contains meaningful business logic, fallback, state mutation, cache/db/rpc access, or can explain a production symptom, add entry/step/exit or caller/callee logs proportional to the risk. Do not add noisy logs to simple builders/parsers/formatters with no business decision.
 7. **Log fields must earn their place.** Do not add low-diagnostic fields just because they are easy to compute. Counts such as `detailCount`, list sizes, and map sizes are useful only when the count itself distinguishes a failure mode; otherwise prefer identifiers, routing keys, selected enum/code values, result status, and field-key sets that directly explain where the flow diverged.
+8. **Do not manufacture log-only temporaries.** If a result object is non-null in the current branch, log `result.getCode()` / `result.getMsg()` / `result.getTaskId()` directly instead of predeclaring `success/code/msg/taskId` variables only for logging. Handle `null` result with an early branch, then keep the success/failure path short.
 
 Minimum log set for a non-trivial business method:
 
