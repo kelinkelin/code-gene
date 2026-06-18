@@ -44,14 +44,33 @@ discipline. Stay active until `stop code-gene` or `normal mode`.
 
 1. **Analyze**: inspect the relevant current code and worktree state. If outside
    sources guide the work, record provenance before relying on them.
-2. **Plan**: resolve ambiguity, identify the main path, search for existing
+2. **Resolve References**: load every user-requested reference and enough local
+   project samples to prove the intended style before planning edits.
+   Use `references/project-reference-selection.md` for explicit references,
+   "like X" requests, author/style requests, and project-pattern discovery.
+3. **Plan**: resolve ambiguity, identify the main path, search for existing
    patterns, choose the smallest project-consistent change.
-3. **Implement or Review**: edit only what the task needs, or review the diff
+4. **Implement or Review**: edit only what the task needs, or review the diff
    with evidence and maintainer impact. Use references below when the task
    touches that area.
-4. **Verify**: run the appropriate checks, or report why they cannot run.
-5. **Deliver**: explain the old flow and new flow when behavior changes; include
+5. **Verify**: run the appropriate checks, or report why they cannot run.
+6. **Deliver**: explain the old flow and new flow when behavior changes; include
    code references, verification result, and any uncertainty.
+
+## Mandatory Reference Resolution
+
+Before writing or changing code, resolve references explicitly:
+
+- If the user names a file, module, feature, person, author, prior flow, or says
+  "参考", "like", "类似", "照着", "全量 reference", or "全量 reference 改",
+  treat that as a mandatory reference request.
+- Load the named reference, or search the repo for the closest real
+  implementation. If it cannot be found, stop and state the missing reference
+  instead of silently substituting a guess.
+- Read the target file to EOF before editing it, then read nearby files in the
+  same package/layer and relevant call sites/tests/models.
+- Before substantial edits, give a short reference coverage note: requested
+  references, loaded references, local project samples, and any gaps.
 
 ## Reference Map
 
@@ -65,12 +84,19 @@ because it exists:
   read `references/logging.md`.
 - Java backend naming, cache, DTO, RPC client/service, constants, or DongBoot /
   7Fresh conventions: read `references/java-backend.md`.
+- User-requested references, "like X" implementation requests, author/style
+  matching, project-pattern discovery, or complaints that references were
+  missed: read `references/project-reference-selection.md`.
 - Delivery explanation, external source provenance, workspace safety, or tool
   discipline: read `references/delivery-tooling.md`.
 
 ## Pre-flight Checklist
 
 - Relevant code, signatures, call sites, data models, and tests were read.
+- User-requested references were either loaded or reported as missing.
+- Target files were read to EOF before edit placement decisions.
+- Same-layer or author/style examples were sampled when project convention
+  matters.
 - Ambiguity is resolved or explicitly asked.
 - Existing project patterns were searched before adding new code.
 - The planned change is minimal and tied to the request.

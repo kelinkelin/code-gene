@@ -57,7 +57,9 @@ Also avoid dense null-check ternaries; prefer a guard `if`, `Optional`, or a nam
 
 ## Edit Placement
 
+Read the target file to EOF before deciding where to place edits.
 New methods and fields go at the **end** of the class/file; do not insert them into the middle of existing code. This keeps the diff small and leaves the existing layout undisturbed. Only deviate when the file enforces a strict, obvious member ordering; then follow that ordering.
+For serialized DTOs, request/response objects, constants, enums, mapper methods, and configuration classes, append new members after existing members unless nearby code proves a stronger local ordering.
 
 ## Comment Style
 
