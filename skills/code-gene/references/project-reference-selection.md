@@ -1,12 +1,27 @@
 # Project Reference Selection
 
-Use this reference when the user asks to follow an existing project pattern,
-mentions a reference by name, says "like X", asks for "全量 reference", or reports
-that expected references were missed.
+Use this reference for every code writing or code review task. Its job is to
+force automatic project style/reference discovery before Codex edits or judges
+code. User-mentioned references are priority signals, not the trigger.
 
-## Hard Triggers
+## Default Behavior
 
-Treat these as mandatory references:
+When `code-gene` is active for implementation or review, do not wait for the
+user to say "参考". First discover the local project pattern:
+
+- Implementation: target file to EOF, direct call sites/models, same package or
+  layer, and 2-4 same-feature examples.
+- Review: changed files, affected contracts/call sites, and same-layer examples
+  needed to judge whether the diff matches project conventions.
+- New feature family: find the nearest existing analogue before inventing a
+  structure.
+
+Only skip this when the task is purely informational and no code behavior,
+review judgment, or implementation style is involved.
+
+## Priority Signals
+
+Treat these as highest-priority references on top of the default discovery:
 
 - File paths, class names, method names, modules, features, screenshots, PRDs,
   spreadsheets, PDFs, prompt/skill keys, table names, or API names.
@@ -14,14 +29,14 @@ Treat these as mandatory references:
   "看 X 的代码风格", "像 blueglass 那样", or "不要漏 reference".
 - People or author/style names, for example `baolongjie` or `liujishuai`.
 
-If a mandatory reference cannot be loaded, stop before editing and say exactly
+If a priority reference cannot be loaded, stop before editing and say exactly
 which reference is missing and what was searched.
 
 ## Reference Coverage Note
 
 Before substantial edits, report a compact coverage note:
 
-- Requested references: what the user named or implied.
+- Requested references: what the user named or implied, if any.
 - Loaded references: files, classes, docs, configs, or artifacts actually read.
 - Project samples: same-module/same-layer/author-style examples read.
 - Gaps: references not found, unreadable, or intentionally skipped.

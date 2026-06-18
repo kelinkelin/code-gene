@@ -3,7 +3,8 @@ name: code-gene
 description: >
   Code generation discipline for coding, modification, bugfix, refactor, and
   PR/diff review tasks. Forces read-before-write, evidence before assumptions,
-  convention before invention, minimal implementation, and verified delivery.
+  automatic project reference/style discovery before edits, convention before
+  invention, minimal implementation, and verified delivery.
   Use when the user invokes /code-gene, says "use code-gene", asks for strict
   code generation discipline, or wants the code-gene checklist applied.
 ---
@@ -44,10 +45,10 @@ discipline. Stay active until `stop code-gene` or `normal mode`.
 
 1. **Analyze**: inspect the relevant current code and worktree state. If outside
    sources guide the work, record provenance before relying on them.
-2. **Resolve References**: load every user-requested reference and enough local
-   project samples to prove the intended style before planning edits.
-   Use `references/project-reference-selection.md` for explicit references,
-   "like X" requests, author/style requests, and project-pattern discovery.
+2. **Resolve References**: automatically discover the project style and load
+   enough local references to prove the intended implementation/review pattern.
+   User-requested references raise priority; they are not required to trigger
+   this step. Use `references/project-reference-selection.md`.
 3. **Plan**: resolve ambiguity, identify the main path, search for existing
    patterns, choose the smallest project-consistent change.
 4. **Implement or Review**: edit only what the task needs, or review the diff
@@ -59,18 +60,22 @@ discipline. Stay active until `stop code-gene` or `normal mode`.
 
 ## Mandatory Reference Resolution
 
-Before writing or changing code, resolve references explicitly:
+`code-gene` exists to write and review code in the project's own style.
+Reference/style discovery is mandatory for every implementation or review task,
+even when the user does not explicitly name a reference.
 
+- For coding tasks, read the target file to EOF, direct call sites/models, and
+  2-4 same-layer or same-feature examples before planning edits.
+- For review tasks, read the changed files, relevant call sites/contracts, and
+  project examples needed to judge whether the diff follows local conventions.
 - If the user names a file, module, feature, person, author, prior flow, or says
   "参考", "like", "类似", "照着", "全量 reference", or "全量 reference 改",
-  treat that as a mandatory reference request.
-- Load the named reference, or search the repo for the closest real
-  implementation. If it cannot be found, stop and state the missing reference
-  instead of silently substituting a guess.
+  load that reference first. If it cannot be found, stop and state what was
+  searched instead of silently substituting a guess.
 - Read the target file to EOF before editing it, then read nearby files in the
   same package/layer and relevant call sites/tests/models.
 - Before substantial edits, give a short reference coverage note: requested
-  references, loaded references, local project samples, and any gaps.
+  references if any, automatically loaded project samples, and any gaps.
 
 ## Reference Map
 
@@ -84,15 +89,19 @@ because it exists:
   read `references/logging.md`.
 - Java backend naming, cache, DTO, RPC client/service, constants, or DongBoot /
   7Fresh conventions: read `references/java-backend.md`.
-- User-requested references, "like X" implementation requests, author/style
-  matching, project-pattern discovery, or complaints that references were
-  missed: read `references/project-reference-selection.md`.
+- Any implementation or review task: read
+  `references/project-reference-selection.md` to drive automatic project
+  reference/style discovery. User-requested references, "like X" requests,
+  author/style matching, and complaints that references were missed raise its
+  priority further.
 - Delivery explanation, external source provenance, workspace safety, or tool
   discipline: read `references/delivery-tooling.md`.
 
 ## Pre-flight Checklist
 
 - Relevant code, signatures, call sites, data models, and tests were read.
+- Automatic project style/reference samples were loaded for implementation or
+  review work.
 - User-requested references were either loaded or reported as missing.
 - Target files were read to EOF before edit placement decisions.
 - Same-layer or author/style examples were sampled when project convention
