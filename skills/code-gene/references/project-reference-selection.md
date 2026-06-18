@@ -7,7 +7,9 @@ code. User-mentioned references are priority signals, not the trigger.
 ## Default Behavior
 
 When `code-gene` is active for implementation or review, do not wait for the
-user to say "参考". First discover the local project pattern:
+user to say "参考". After loading the core reference baseline
+(`code-style.md`, `logging.md`, `java-backend.md`, and `delivery-tooling.md`),
+discover the local project pattern:
 
 - Implementation: target file to EOF, direct call sites/models, same package or
   layer, and 2-4 same-feature examples.

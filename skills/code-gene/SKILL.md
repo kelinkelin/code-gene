@@ -45,10 +45,10 @@ discipline. Stay active until `stop code-gene` or `normal mode`.
 
 1. **Analyze**: inspect the relevant current code and worktree state. If outside
    sources guide the work, record provenance before relying on them.
-2. **Resolve References**: automatically discover the project style and load
-   enough local references to prove the intended implementation/review pattern.
-   User-requested references raise priority; they are not required to trigger
-   this step. Use `references/project-reference-selection.md`.
+2. **Resolve References**: load the core coding/review references, then
+   automatically discover the project style and enough local samples to prove
+   the intended implementation/review pattern. User-requested references raise
+   priority; they are not required to trigger this step.
 3. **Plan**: resolve ambiguity, identify the main path, search for existing
    patterns, choose the smallest project-consistent change.
 4. **Implement or Review**: edit only what the task needs, or review the diff
@@ -64,6 +64,10 @@ discipline. Stay active until `stop code-gene` or `normal mode`.
 Reference/style discovery is mandatory for every implementation or review task,
 even when the user does not explicitly name a reference.
 
+- Always load the core reference baseline before coding or review:
+  `references/code-style.md`, `references/logging.md`,
+  `references/java-backend.md`, `references/project-reference-selection.md`,
+  and `references/delivery-tooling.md`.
 - For coding tasks, read the target file to EOF, direct call sites/models, and
   2-4 same-layer or same-feature examples before planning edits.
 - For review tasks, read the changed files, relevant call sites/contracts, and
@@ -79,27 +83,31 @@ even when the user does not explicitly name a reference.
 
 ## Reference Map
 
-Load only the references needed for the task; never preload every reference just
-because it exists:
+For every code writing or code review task, load the core reference baseline
+first. These are not conditional:
+
+- `references/code-style.md`: formatting, helper placement, comments, edit
+  placement, and anti-over-engineering.
+- `references/logging.md`: log level, business traceability, exception and
+  external-call logging.
+- `references/java-backend.md`: naming, DTO/RPC/client/service/constants, cache,
+  DongBoot and 7Fresh Java conventions.
+- `references/project-reference-selection.md`: automatic local project
+  reference/style discovery.
+- `references/delivery-tooling.md`: workspace safety, verification, delivery
+  explanation, and source provenance.
+
+Then load scene-specific references as needed:
 
 - PR, diff, CR, or review task: read `references/review.md`.
-- Implementation, refactor, over-design risk, helper placement, or comments:
-  read `references/code-style.md`.
-- Business logs, RPC/HTTP/MQ/DB calls, failure diagnosis, or traceability:
-  read `references/logging.md`.
-- Java backend naming, cache, DTO, RPC client/service, constants, or DongBoot /
-  7Fresh conventions: read `references/java-backend.md`.
-- Any implementation or review task: read
-  `references/project-reference-selection.md` to drive automatic project
-  reference/style discovery. User-requested references, "like X" requests,
-  author/style matching, and complaints that references were missed raise its
-  priority further.
-- Delivery explanation, external source provenance, workspace safety, or tool
-  discipline: read `references/delivery-tooling.md`.
+- User-requested docs, PRDs, screenshots, files, author/style examples,
+  "like X" requests, or feature analogues: load those local/external references
+  before planning.
 
 ## Pre-flight Checklist
 
 - Relevant code, signatures, call sites, data models, and tests were read.
+- Core reference baseline was loaded for implementation or review work.
 - Automatic project style/reference samples were loaded for implementation or
   review work.
 - User-requested references were either loaded or reported as missing.
