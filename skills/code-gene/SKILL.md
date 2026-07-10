@@ -3,8 +3,9 @@ name: code-gene
 description: >
   Code generation discipline for coding, modification, bugfix, refactor, and
   PR/diff review tasks. Forces read-before-write, evidence before assumptions,
-  automatic project reference/style discovery before edits, convention before
-  invention, minimal implementation, and verified delivery.
+  automatic project reference/style discovery plus auditable reference
+  application before edits, convention before invention, minimal
+  implementation, and verified delivery.
   Use when the user invokes /code-gene, says "use code-gene", asks for strict
   code generation discipline, or wants the code-gene checklist applied.
 ---
@@ -48,7 +49,8 @@ discipline. Stay active until `stop code-gene` or `normal mode`.
 2. **Resolve References**: load the core coding/review references, then
    automatically discover the project style and enough local samples to prove
    the intended implementation/review pattern. User-requested references raise
-   priority; they are not required to trigger this step.
+   priority; they are not required to trigger this step. Build the reference
+   application ledger described below before planning.
 3. **Plan**: resolve ambiguity, identify the main path, search for existing
    patterns, choose the smallest project-consistent change.
 4. **Implement or Review**: edit only what the task needs, or review the diff
@@ -80,6 +82,49 @@ even when the user does not explicitly name a reference.
   same package/layer and relevant call sites/tests/models.
 - Before substantial edits, give a short reference coverage note: requested
   references if any, automatically loaded project samples, and any gaps.
+
+## Reference Application Gate
+
+Loading a reference is not enough. Convert every loaded reference into an
+explicit decision before editing or reviewing code.
+
+1. Read every mandatory reference to EOF in the current task. Do not rely on a
+   prior task's memory or claim a reference was loaded after reading only its
+   heading or an excerpt.
+2. Build a compact reference application ledger with one row per mandatory and
+   scene-specific reference. Record:
+   - `reference`: the file or user-provided source;
+   - `applicable rules`: the concrete rules that affect this task;
+   - `evidence`: target/project files proving how the rule applies locally;
+   - `effect`: the implementation or review decision caused by the rule.
+3. A reference may be marked `N/A` only when its domain is genuinely untouched.
+   State the reason. For example, `java-backend.md` can be `N/A` for a pure
+   TypeScript change, while `logging.md` is not `N/A` when changing an external
+   call, failure path, or business-flow boundary.
+4. Before substantial edits, report a concise coverage note naming all loaded
+   mandatory references, scene-specific references, project samples, and gaps.
+   The full ledger may stay internal unless the user asks for it.
+5. If a mandatory or requested reference cannot be read, or local evidence is
+   insufficient to resolve a conflict, stop before editing and report the gap.
+
+The gate passes only when every loaded reference has either an evidenced effect
+or an explicit `N/A` reason. Do not use `N/A` to bypass a rule that applies.
+
+## Post-change Conformance Gate
+
+After implementation or review and before delivery:
+
+1. Re-read the final diff or reviewed lines against the reference application
+   ledger.
+2. Check every applicable rule for concrete evidence in the result. Fix any
+   mismatch instead of merely mentioning it.
+3. Run project verification appropriate to the touched behavior.
+4. Report which references materially affected the result, which were `N/A`
+   and why, verification performed, and unresolved risk.
+
+Do not declare completion when reference loading, project sampling, diff
+conformance, or verification is missing. If blocked, name the exact missing
+evidence or command.
 
 ## Reference Map
 
@@ -118,6 +163,8 @@ Then load scene-specific references as needed:
 - Existing project patterns were searched before adding new code.
 - The planned change is minimal and tied to the request.
 - Required reference files above were loaded for touched areas.
+- Every loaded reference has an evidenced effect or an explicit valid `N/A`
+  reason in the reference application ledger.
 - Verification command is known, or the blocker is known.
 
 Write or change code only after this checklist is clean.
